@@ -1,0 +1,35 @@
+create table customers(
+    'id' INTEGER PRIMARY KEY AUTO_INCREMENT,
+    'email' VARCHAR(128) NOT NULL UNIQUE ,
+    'password' VARCHAR(128) NOT NULL ,
+    'name' VARCHAR(128) NOT NULL ,
+    'phoneNumber' INT NOT NULL ,
+    'dateOfBirth' DATE NOT NULL
+);
+
+create table admins(
+                          'id' INTEGER PRIMARY KEY AUTO_INCREMENT,
+                          'email' VARCHAR(128) NOT NULL UNIQUE ,
+                          'password' VARCHAR(128) NOT NULL ,
+                          'name' VARCHAR(128) NOT NULL ,
+                          'phoneNumber' INT NOT NULL ,
+                          'dateOfBirth' DATE NOT NULL
+);
+
+create table products(
+                          'id' INTEGER PRIMARY KEY AUTO_INCREMENT,
+                          'nameProduct' VARCHAR(128) NOT NULL UNIQUE ,
+                          'price' DOUBLE NOT NULL ,
+                          'availableProduct' BOOLEAN NOT NULL
+);
+
+CREATE TABLE `customers_products` (
+   `id` int NOT NULL,
+   `customer_id` int NOT NULL,
+   `product_id` int NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `customers_products_customers_id_fk` (`customer_id`),
+    KEY `customers_products_products_id_fk` (`product_id`),
+    CONSTRAINT `customers_products_customers_id_fk` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
+    CONSTRAINT `customers_products_products_id_fk` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+);
