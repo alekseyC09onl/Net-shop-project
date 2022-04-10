@@ -4,8 +4,10 @@ import lombok.*;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
+import java.util.List;
 import java.util.Objects;
 
 
@@ -16,11 +18,11 @@ import java.util.Objects;
 @Builder
 @Entity
 @Table(name = "admins", schema = "shop_schema")
-public class Admin {
+public class Admin implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "email")
     private String email;
@@ -37,7 +39,7 @@ public class Admin {
     @Column(name = "dateOfBirth")
     private Date dateOfBirth;
 
-//    @OneToMany(mappedBy = "admins", fetch = FetchType.LAZY)
+//    @OneToMany(mappedBy = "admin", fetch = FetchType.LAZY)
 //    private List<Product> productList;
 
     @Override

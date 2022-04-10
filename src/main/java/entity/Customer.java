@@ -2,8 +2,10 @@ package entity;
 
 
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -16,7 +18,8 @@ import java.util.Objects;
 @Builder
 @Entity
 @Table(name = "customers", schema = "shop_schema")
-public class Customer {
+@Component //for test with spring
+public class Customer implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,6 +58,19 @@ public class Customer {
     @Override
     public int hashCode() {
         return Objects.hash(id, email, password, name, phoneNumber, dateOfBirth);
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", phoneNumber=" + phoneNumber +
+                ", dateOfBirth=" + dateOfBirth +
+                ", productList=" + productList +
+                '}';
     }
 }
 

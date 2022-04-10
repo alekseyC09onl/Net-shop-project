@@ -2,8 +2,10 @@ package entity;
 
 
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,7 +16,8 @@ import java.util.Objects;
 @Builder
 @Entity
 @Table(name = "products", schema = "shop_schema")
-public class Product {
+@Component //for tests with spring
+public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -28,9 +31,9 @@ public class Product {
     @Column(name = "availableProduct")
     private boolean availableProduct;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
+//    @ManyToOne
 //    @JoinColumn(name = "admin_id")
-//    private Administr admin;
+//    private Admin admin;
 
 
     @ManyToMany
