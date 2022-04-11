@@ -3,6 +3,7 @@ package dao;
 import entity.Product;
 import org.hibernate.Session;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static utils.HibernateUtil.*;
 
@@ -67,5 +68,23 @@ public class ProductDAOImpl implements ProductDAO <Long, Product> {
             System.out.println("(o_o) Error in method delProduct - ProductDAOImpl (o_o)");
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Product findProductByNameProduct(String nameProduct) {
+        try (Session session = getSessionFactory().openSession()) {
+            session.beginTransaction();
+            List<Product> productList = session.createQuery("from Product").list();
+            session.getTransaction().commit();
+            Product foundProduct = productList.stream()
+                    .filter(product -> product.getNameProduct().equals(nameProduct))
+                    .collect(Collectors.toList())
+                    .get(0);
+            return foundProduct;
+        } catch (Throwable e) {
+            System.out.println("(o_o) Error in method findProductByNameProduct - ProductDAOImpl (o_o)");
+            e.printStackTrace();
+        }
+        return null;
     }
 }

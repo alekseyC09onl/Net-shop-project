@@ -12,4 +12,6 @@ public interface ProductDAO <K, P> {
 
     void delProduct(P product);
 
+    P findProductByNameProduct(String nameProduct);
+
 }

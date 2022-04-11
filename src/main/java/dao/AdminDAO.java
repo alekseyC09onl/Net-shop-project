@@ -10,6 +10,10 @@ public interface AdminDAO <K, A>{
 
     List<A> getAdminList();
 
-    void delAdminById(K id);
+    void delAdminById(A admin);
+
+    A updateAdminData(A admin);
+
+    A findAdminByEmail(String email);
 
 }

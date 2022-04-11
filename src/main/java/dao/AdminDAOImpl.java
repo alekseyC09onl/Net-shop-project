@@ -1,107 +1,108 @@
 package dao;
 
+import entity.Admin;
 import entity.Customer;
-import entity.Product;
 import org.hibernate.Session;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static utils.HibernateUtil.*;
+import static utils.HibernateUtil.getSessionFactory;
 
-public class CustomerDAOImpl implements CustomerDAO<Customer, Integer> {
+public class AdminDAOImpl implements AdminDAO<Integer, Admin> {
+
     @Override
-    public Customer addCustomer(Customer customer) {
+    public Admin addAdmin(Admin admin) {
         try (Session session = getSessionFactory().openSession()) {
             session.beginTransaction();
 
-            session.save(customer);
+            session.save(admin);
 
             session.getTransaction().commit();
         } catch (Throwable e) {
-            System.out.println("(o_o) Error in method addCustomer - CustomerDAOImpl (o_o)");
+            System.out.println("(o_o) Error in method addAdmin - AdminDAOImpl (o_o)");
             e.printStackTrace();
         }
         return null;
     }
 
     @Override
-    public Customer findCustomerById(Integer id) {
+    public Admin findAdminById(Integer id) {
         try (Session session = getSessionFactory().openSession()) {
             session.beginTransaction();
 
-            Customer customer = session.find(Customer.class, id);
+            Admin admin = session.find(Admin.class, id);
 
             session.getTransaction().commit();
-            return customer;
+            return admin;
         } catch (Throwable e) {
-            System.out.println("(o_o) Error in method findCustomerById - CustomerDAOImpl (o_o)");
+            System.out.println("(o_o) Error in method findAdminById - AdminDAOImpl (o_o)");
             e.printStackTrace();
         }
         return null;
     }
 
     @Override
-    public List<Customer> getCustomerList() {
+    public List<Admin> getAdminList() {
         try (Session session = getSessionFactory().openSession()) {
             session.beginTransaction();
 
-            List<Customer> customerList = session.createQuery("from Customer ").list();
+            List<Admin> adminList = session.createQuery("from Admin ").list();
 
             session.getTransaction().commit();
-            return customerList;
+            return adminList;
         } catch (Throwable e) {
-            System.out.println("(o_o) Error in method getCustomerList - CustomerDAOImpl (o_o)");
+            System.out.println("(o_o) Error in method getAdminList - AdminDAOImpl (o_o)");
             e.printStackTrace();
         }
         return null;
     }
 
     @Override
-    public void delCustomerById(Customer customer) {
+    public Admin updateAdminData(Admin admin) {
         try (Session session = getSessionFactory().openSession()) {
             session.beginTransaction();
 
-            session.delete(customer);
+            session.update(admin);
 
             session.getTransaction().commit();
+            return admin;
         } catch (Throwable e) {
-            System.out.println("(o_o) Error in method delCustomerById - CustomerDAOImpl (o_o)");
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public Customer updateCustomersData(Customer customer) {
-        try (Session session = getSessionFactory().openSession()) {
-            session.beginTransaction();
-
-            session.update(customer);
-
-            session.getTransaction().commit();
-            return customer;
-        } catch (Throwable e) {
-            System.out.println("(o_o) Error in method updateCustomersData - CustomerDAOImpl (o_o)");
+            System.out.println("(o_o) Error in method updateAdminData - AdminDAOImpl (o_o)");
             e.printStackTrace();
         }
         return null;
     }
 
     @Override
-    public Customer findCustomerByEmail(String email) {
+    public void delAdminById(Admin admin) {
         try (Session session = getSessionFactory().openSession()) {
             session.beginTransaction();
-            List<Customer> customerList = session.createQuery("from Customer ").list();
+
+            session.delete(admin);
+
             session.getTransaction().commit();
-            Customer foundCustomer = customerList.stream()
-                    .filter(customer -> customer.getEmail().equals(email))
+        } catch (Throwable e) {
+            System.out.println("(o_o) Error in method delAdminById - AdminDAOImpl (o_o)");
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Admin findAdminByEmail(String email) {
+        try (Session session = getSessionFactory().openSession()) {
+            session.beginTransaction();
+            List<Admin> adminList = session.createQuery("from Admin ").list();
+            session.getTransaction().commit();
+            Admin foundAdmin = adminList.stream()
+                    .filter(admin -> admin.getEmail().equals(email))
                     .collect(Collectors.toList())
                     .get(0);
-            return foundCustomer;
+            return foundAdmin;
         } catch (Throwable e) {
-            System.out.println("(o_o) Error in method findCustomerByEmail - CustomerDAOImpl (o_o)");
+            System.out.println("(o_o) Error in method findAdminByEmail - AdminDAOImpl (o_o)");
             e.printStackTrace();
         }
         return null;
     }
 }
-

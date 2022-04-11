@@ -14,4 +14,6 @@ public interface CustomerDAO<C, K> {
 
     C updateCustomersData(C customer);
 
+    C findCustomerByEmail(String email);
+
 }
