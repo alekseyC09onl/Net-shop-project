@@ -10,7 +10,7 @@ public interface CustomerDAO<C, K> {
 
     List<C> getCustomerList();
 
-    void delCustomerById(K id);
+    void delCustomerById(C customer);
 
     C updateCustomersData(C customer);
 
