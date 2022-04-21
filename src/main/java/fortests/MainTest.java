@@ -1,14 +1,13 @@
 package fortests;
 
-import dao.AdminDAOImpl;
 import dao.ProductDAOImpl;
-import mappers.AdminMapper;
+
+import java.util.List;
 
 public class MainTest {
     public static void main(String[] args) {
 
         ProductDAOImpl productDAO = new ProductDAOImpl();
-        AdminDAOImpl adminDAO = new AdminDAOImpl();
 //        Product newBread = productDAO.getProductList().stream().filter(product -> product.getNameProduct().equals("bread")).collect(Collectors.toList()).get(0);
 //        productDAO.delProduct(newBread);
 //        productDAO.updateProductData(newBread);
@@ -21,7 +20,7 @@ public class MainTest {
 //        productDAO.updateProductData(newBread);
 //        System.out.println(productDAO.findProductByNameProduct("bread").getPrice());
 
-        System.out.println(AdminMapper.mapAdminToAdminDTO(adminDAO.findAdminById(1)));
+//        System.out.println(AdminMapper.mapAdminToAdminDTO(adminDAO.findAdminById(1)));
 
 
 

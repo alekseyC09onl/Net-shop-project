@@ -16,7 +16,6 @@ import java.util.Objects;
 @Builder
 @Entity
 @Table(name = "products", schema = "shop_schema")
-@Component //for tests with spring
 public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,16 +30,12 @@ public class Product implements Serializable {
     @Column(name = "availableProduct")
     private boolean availableProduct;
 
-//    @ManyToOne
-//    @JoinColumn(name = "admin_id")
-//    private Admin admin;
-
-
     @ManyToMany
-    @JoinTable(name = "customers_products",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "customer_id"))
-    private List<Customer> customerList;
+    @JoinTable(name = "products_orders",
+    joinColumns = @JoinColumn(name = "productId"),
+    inverseJoinColumns = @JoinColumn(name = "orderId"))
+    private List<Order> orderList;
+
 
     @Override
     public boolean equals(Object o) {

@@ -1,15 +1,13 @@
 package entity;
 
-
 import lombok.*;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,59 +16,64 @@ import java.util.Objects;
 @Builder
 @Entity
 @Table(name = "customers", schema = "shop_schema")
-@Component //for test with spring
 public class Customer implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 4416758111267762740L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "firstName")
+    private String firstName;
+
+    @Column(name = "lastName")
+    private String lastName;
+
     @Column(name = "email")
     private String email;
 
-    @Column(name = "password")
-    private String password;
-
-    @Column(name = "name")
-    private String name;
-
     @Column(name = "phoneNumber")
-    private Integer phoneNumber;
+    private String phoneNumber;
 
-    @Column(name = "dateOfBirth")
-    private LocalDate dateOfBirth;
+//    @OneToMany(mappedBy = "customer")
+//    private List<Address> addressList;
 
-    @ManyToMany
-    @JoinTable(name = "customers_products",
-            joinColumns = @JoinColumn(name = "customer_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private List<Product> productList;
+    @OneToMany//Class Customer
+    @JoinColumn(name = "addressId", referencedColumnName = "id")
+    private Set<Address> addressList;
 
+//    @OneToMany(mappedBy = "customer")
+//    private List<Order> orderList;
+
+    @OneToMany
+    @JoinColumn(name = "orderId")
+    private List<Order> orderList;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return Objects.equals(id, customer.id) && Objects.equals(email, customer.email) && Objects.equals(password, customer.password) && Objects.equals(name, customer.name) && Objects.equals(phoneNumber, customer.phoneNumber) && Objects.equals(dateOfBirth, customer.dateOfBirth);
+        return Objects.equals(id, customer.id) && Objects.equals(firstName, customer.firstName) && Objects.equals(lastName, customer.lastName) && Objects.equals(email, customer.email) && Objects.equals(phoneNumber, customer.phoneNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password, name, phoneNumber, dateOfBirth);
+        return Objects.hash(id, firstName, lastName, email, phoneNumber);
     }
 
     @Override
     public String toString() {
         return "Customer{" +
                 "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
-                ", phoneNumber=" + phoneNumber +
-                ", dateOfBirth=" + dateOfBirth +
-                ", productList=" + productList +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", addressList=" + addressList +
+                ", orderList=" + orderList +
                 '}';
     }
 }
-
